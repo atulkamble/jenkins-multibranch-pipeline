@@ -30,26 +30,8 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'docker-hub-credentials', 
-                    passwordVariable: 'DOCKER_PASSWORD', 
-                    usernameVariable: 'DOCKER_USERNAME')]) {
-                    
-                    script {
-                        // Check if image exists before deploy
-                        sh 'docker inspect -f . my-python-app'
-
-                        // Run deploy script
-                        sh 'chmod +x deploy.sh && ./deploy.sh'
-                    }
-                }
-            }
-        }
     }
-
+    
     post {
         always {
             script {
